@@ -409,13 +409,23 @@ class CLIENT:
                 join_pkt = await GenJoinGlobaL(owner, recruit_code, self.key, self.iv)
                 await self.SEndPacKeT(self.whisper_writer, self.online_writer, 'OnLine', join_pkt)
                 await asyncio.sleep(0.5)
-                owner , chat_code , sq_code = await GeTSQDaTa(self.d)
-                if squad_code:
-                    chat_pkt = await AutH_Chat(3 , owner, chat_code , self.key, self.iv)
+                chat_owner = owner
+                chat_code = None
+                try:
+                    if isinstance(getattr(self, "d", None), dict):
+                        parsed_owner, parsed_chat_code, _ = await GeTSQDaTa(self.d)
+                        if parsed_owner:
+                            chat_owner = parsed_owner
+                        chat_code = parsed_chat_code
+                except Exception:
+                    chat_code = None
+
+                if chat_code:
+                    chat_pkt = await AutH_Chat(3, chat_owner, chat_code, self.key, self.iv)
                     await self.SEndPacKeT(self.whisper_writer, self.online_writer, 'ChaT', chat_pkt)
                     await asyncio.sleep(0.3)
                 msg = f"[FF0000][B][C]GHOST {self.bot_name} JOINED VIA GLOBAL SQUAD!"
-                msg_pkt = await xSEndMsgsQ(Msg, id, self.key , self.iv)
+                msg_pkt = await xSEndMsgsQ(msg, chat_owner, self.key, self.iv)
                 await self.SEndPacKeT(self.whisper_writer, self.online_writer, 'ChaT', msg_pkt)
                 await asyncio.sleep(5)
                 leave_pkt = await ExiT('000000', self.key, self.iv)
