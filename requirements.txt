@@ -1,0 +1,3 @@
+# Vercel health endpoint uses only the Python standard library.
+# Do not add the long-running bot dependencies here unless you also convert the
+# bot into request/response API handlers that can run inside Vercel Functions.
