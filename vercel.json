@@ -1,0 +1,22 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "rewrites": [
+    {
+      "source": "/",
+      "destination": "/api"
+    },
+    {
+      "source": "/health",
+      "destination": "/api"
+    },
+    {
+      "source": "/status",
+      "destination": "/api"
+    }
+  ],
+  "functions": {
+    "api/**/*.py": {
+      "excludeFiles": "{**/__pycache__/**,**/*.pyc,vv.json,.git/**,.venv/**,venv/**}"
+    }
+  }
+}
